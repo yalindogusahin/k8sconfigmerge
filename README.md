@@ -49,7 +49,7 @@ Place all your config files to a folder. Than simple run the playbook like below
 mkdir yamlfiles
 cp *.yaml ./yamlfiles
 export CONFIG_DIR=yamlfiles
-ansible-playbook main.yml --extra-vars="user=$USER config_path=./$CONFIG_DIR"
+ansible-playbook main.yml --extra-vars="user=$USER config_path=$CONFIG_DIR"
 ```
 
 ## Result <a name = "result"></a>

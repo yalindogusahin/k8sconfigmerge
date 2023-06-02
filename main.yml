@@ -3,7 +3,7 @@
   gather_facts: false
   vars:
     user: yalin
-    config_path: ./kubectlyamls
+    config_path: ./yamlfiles
   tasks:
     - name: Reads each file on the path that you give for yaml files
       find:

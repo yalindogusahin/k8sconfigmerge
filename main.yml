@@ -1,0 +1,25 @@
+- name: Kubernetes merge playbook for multiple Yaml files
+  hosts: localhost
+  gather_facts: false
+  vars:
+    user: yalin
+    config_path: ./kubectlyamls
+  tasks:
+    - name: Reads each file on the path that you give for yaml files
+      find:
+        paths: "{{ config_path }}"
+        file_type: file
+      register: file_list
+
+    - name: Search for file names and register them into variable
+      set_fact:
+        yaml_paths: "{{ file_list.files | map(attribute='path') | list }}"
+    - name: Debug the variable for file names
+      debug:
+        var: yaml_paths
+
+    - name: Task for merging operation
+      shell: | 
+        KUBECONFIG=/home/{{ user }}/.kube/config:/home/{{ user }}/{{ item }} kubectl config view --flatten >> /tmp/config
+        cp /tmp/config /home/{{ user }}/.kube/config
+      with_items: "{{ yaml_paths }}"
